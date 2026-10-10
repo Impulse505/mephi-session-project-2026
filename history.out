@@ -1,0 +1,81 @@
+    1  clear
+    2  nmcli connection modify eth0 ipv4.method auto ipv6.method auto connection.autoconnect yes
+    3  ifconfig 
+    4  nmcli connection modify enp0s3 ipv4.method auto ipv6.method auto connection.autoconnect yes
+    5  ifconfig 
+    6  nmcli connection up enp0s3 
+    7  clear
+    8  hostnamectl set-hostname mephi-2026.domain.local
+    9  ping -c 4 8.8.8.8 > ~/ping.out
+   10  cat ping.out 
+   11  clear
+   12  dnf update -y
+   13  nano 
+   14  dnf install -y nginx libcap-ng-utils policycoreutils-python-utils 
+   15  dnf download tcpdump --destdir=/tmp
+   16  rpm -ivh /tmp/tcpdump*.rpm
+   17  rm -f /tmp/tcpdump*i686.rpm
+   18  rpm -ivh /tmp/tcpdump*.rpm
+   19  dnf history > ~/dnf.out
+   20  dnf history info >> ~/dnf.out
+   21  rpm -qa | grep policycoreutils-python-utils >> ~/dnf.out
+   22  cat dnf.out 
+   23  clear
+   24  lsblk 
+   25  fdisk /dev/sdb
+   26  mkfs.ext4 -L MEPHI_WEB /dev/sdb1
+   27  mkdir /mephi-web
+   28  echo "LABEL=MEPHI_WEB /mephi-web ext4 defaults 0 0" >> /etc/fstab
+   29  mount -a
+   30  systemctl daemon-reload
+   31  df -h | grep mephi-web
+   32  systemctl enable --now nginx
+   33  echo "Hello from Student: 374964" > /mephi-web/index.html
+   34  nano /etc/nginx/nginx.conf
+   35  systemctl restart nginx
+   36  journalctl -u nginx -b > ~/journalctl.out
+   37  cat journalctl.out 
+   38  clear
+   39  history 
+   40  clear
+   41  mkdir -p /data/mephi-2026
+   42  groupadd developers
+   43  groupadd -g 4444 curators
+   44  useradd -u 5501 -g developers user1
+   45  useradd -u 5502 -g developers user2
+   46  useradd -u 5503 -g developers user3
+   47  useradd -g curators curator1
+   48  useradd -g curators curator2
+   49  chown root:developers /data/mephi-2026
+   50  chmod 2770 /data/mephi-2026
+   51  setfacl -m g:curators:r-x /data/mephi-2026
+   52  setfacl -d -m g:developers:rw- /data/mephi-2026
+   53  setfacl -d -m g:curators:r-- /data/mephi-2026
+   54  getfacl /data/mephi-2026
+   55  setcap cap_net_raw,cap_net_admin+ep /usr/sbin/tcpdump
+   56  setenforce 1
+   57  semanage fcontext -a -t httpd_sys_content_t "/mephi-web(/.*)?"
+   58  restorecon -Rv /mephi-web
+   59  curl http://localhost/
+   60  curl http://localhost/ > curl.out
+   61  ls
+   62  cat curl.out 
+   63  clear
+   64  echo "- : @curators : LOCAL" >> /etc/security/access.conf
+   65  echo "account required pam_access.so" >> /etc/pam.d/login
+   66  sed -i 's/^PASS_MAX_DAYS.*/PASS_MAX_DAYS   90/' /etc/login.defs
+   67  sed -i 's/^PASS_MIN_LEN.*/PASS_MIN_LEN    12/' /etc/login.defs
+   68  echo "minlen = 12" >> /etc/security/pwquality.conf
+   69  chage -M 90 user1
+   70  chage -M 90 user2
+   71  chage -M 90 user3
+   72  getenforce
+   73  getenforce > ~/getenforce.out
+   74  stat /data/mephi-2026
+   75  stat /data/mephi-2026 > ~/stat.out
+   76  cat stat.out 
+   77  stat /mephi-web >> ~/stat.out
+   78  cat stat.out 
+   79  getcap /usr/sbin/tcpdump > ~/getcap.out
+   80  cat getcap.out 
+   81  history > ~/history.out

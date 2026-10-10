@@ -1,0 +1,25 @@
+Иденти | Командная строка                                        | Дата и время     | Действия       | Изменен
+--------------------------------------------------------------------------------------------------------------
+     6 | install -y nginx libcap-ng-utils policycoreutils-python | 2026-10-10 20:55 | Install        |    5   
+     5 | update -y                                               | 2026-10-10 20:45 | I, U           |   36   
+     4 | update                                                  | 2026-09-30 00:57 | I, O, U        |  237 E<
+     3 | autoremove -y --setopt=metadata_expire=-1               | 2026-09-30 00:34 | Removed        |    1 ><
+     2 | remove -y --setopt=metadata_expire=-1 open-vm-tools spi | 2026-09-30 00:33 | Removed        |    2 >E
+     1 |                                                         | 2026-09-30 00:15 | Install        | 1848 EE
+Идентификатор транзакции: 6
+Время начала   : Сб 10 окт 2026 20:55:50
+Начало rpmdb   : 6a3a5b4911e21537c987a953175c8a9e4dc554493e3168f4d9b2827290c90dcc
+Время окончания       : Сб 10 окт 2026 20:55:55 (5 секунд)
+Конец rpmdb    : 220d3023ce7ad2cc70abc52b1d08f777efdcfaa806b24704cb5bb1986fa2efbc
+Пользователь   : batursev374964 <batursev374964>
+Код возврата   : Успешно
+Выпускаемая версия     : 8.0
+Команда   : install -y nginx libcap-ng-utils policycoreutils-python-utils
+Комментарий        : 
+Пакеты изменены:
+    Установка libcap-ng-utils-0.8.3-3.red80.x86_64     @base
+    Установка nginx-mimetypes-2.1.53-3.red80.noarch    @base
+    Установка nginx-1:1.30.4-2.red80.x86_64            @updates
+    Установка nginx-core-1:1.30.4-2.red80.x86_64       @updates
+    Установка nginx-filesystem-1:1.30.4-2.red80.noarch @updates
+policycoreutils-python-utils-3.5-1.red80.noarch
